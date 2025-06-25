@@ -24,6 +24,9 @@ MANIFEST
 # Internal documentation
 internal_docs/
 
+# Documentation
+docs/
+
 # Virtual Environment
 venv/
 env/
@@ -91,6 +94,7 @@ coverage.xml
 !diverse_scenario_results.json
 !llm_comparison_results.json
 !evaluation_results.json
+!assets/**
 
 # IDE specific files
 .idea/
