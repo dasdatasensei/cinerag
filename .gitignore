@@ -96,6 +96,9 @@ coverage.xml
 !evaluation_results.json
 !assets/**
 
+# Large files (over 100MB) - excluded from repository
+assets/cinerag_semantic_search.gif
+
 # IDE specific files
 .idea/
 .vscode/
