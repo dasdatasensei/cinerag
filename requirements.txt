@@ -1,0 +1,39 @@
+# Core Web Framework
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic>=2.0.0
+python-multipart==0.0.6
+
+# HTTP Client for TMDB API
+httpx>=0.25.1
+requests==2.31.0
+aiohttp>=3.8.0
+
+# Data Processing
+pandas==2.1.2
+numpy==1.26.1
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# LLM Integration (OpenAI for MVP)
+openai==1.2.4
+
+# Vector Database and Embeddings
+qdrant-client==1.6.1
+sentence-transformers==2.7.0
+huggingface_hub>=0.20.0,<0.25.0
+
+# Machine Learning & Embeddings
+scikit-learn==1.3.1
+
+# System Performance Monitoring
+psutil>=5.9.0
+
+# Caching (Optional - for optimization)
+redis>=4.5.0
+
+# Development
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black>=23.10.1

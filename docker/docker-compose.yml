@@ -1,0 +1,72 @@
+# CineRAG - RAG-Powered Movie Recommendations
+# Author: Dr. Jody-Ann S. Jones <jody@thedatasensei.com>
+# Company: The Data Sensei (www.thedatasensei.com)
+
+services:
+  cinerag-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=${DEBUG:-True}
+      - HOST=0.0.0.0
+      - PORT=8000
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      # Add your API keys via .env file or environment variables
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - TMDB_API_KEY=${TMDB_API_KEY:-}
+      - TMDB_BASE_URL=https://api.themoviedb.org/3
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    volumes:
+      # Mount source code for development (comment out for production)
+      - ..:/app
+    restart: unless-stopped
+    depends_on:
+      - qdrant
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cinerag-api.rule=Host(`localhost`)"
+      - "traefik.http.services.cinerag-api.loadbalancer.server.port=8000"
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333" # REST API
+      - "6334:6334" # Web UI
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    environment:
+      - QDRANT__SERVICE__HTTP_PORT=6333
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+# Optional: Redis for caching (can be added later)
+# redis:
+#   image: redis:7-alpine
+#   ports:
+#     - "6379:6379"
+#   restart: unless-stopped
+#   command: redis-server --appendonly yes
+#   volumes:
+#     - redis_data:/data
+# Uncomment when adding Redis
+# volumes:
+#   redis_data:
+
+volumes:
+  qdrant_data:

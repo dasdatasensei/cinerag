@@ -1,0 +1,14 @@
+# OpenAI API (for recommendations)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# TMDB API (for movie metadata and images)
+TMDB_API_KEY=your_tmdb_api_key_here
+TMDB_BASE_URL=https://api.themoviedb.org/3
+
+# Application Settings
+DEBUG=True
+HOST=0.0.0.0
+PORT=8000
+
+# CORS Settings (for frontend)
+FRONTEND_URL=http://localhost:3000
